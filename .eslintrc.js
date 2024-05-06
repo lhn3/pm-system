@@ -54,6 +54,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off', // 不能有声明后未被使用的变量或参数
     'react/display-name': 'off',
     'react/prop-types': 'off', // 默认使用react/prop-types检查
-    'require-jsdoc': 'off' // 取消注视规范
+    'require-jsdoc': 'off', // 取消注视规范
+    '@typescript-eslint/no-var-requires': 'off'
   }
 }

@@ -5,12 +5,7 @@
  * index.js中 import 'antd/dist/antd.less'
  * (同时项目可以使用less)
  */
-
-/**
- * 配置路径别名
- * @type {{overrideWebpackConfig: function({context?: *, webpackConfig: *, pluginOptions?: *}): *, pathSep: string}|{overrideWebpackConfig?: function({context?: *, webpackConfig: *, pluginOptions?: *}): *, pathSep?: string}}
- */
-const path = require('path')
+let path = require('path')
 
 const CracoLessPlugin = require('craco-less')
 
@@ -32,12 +27,6 @@ module.exports = {
   webpack: {
     alias: {
       '@': path.resolve(__dirname, 'src')
-    },
-    // mui搭配style-component配置
-    resolve: {
-      alias: {
-        '@mui/styled-engine': '@mui/styled-engine-sc'
-      }
     }
   }
 }
