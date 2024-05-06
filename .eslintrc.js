@@ -43,12 +43,10 @@ module.exports = {
     'no-extra-semi': 2, // 禁止多余的冒号
     'no-func-assign': 2, // 禁止重复的函数声明
     'no-irregular-whitespace': 2, // 不能有不规则的空格
-    'linebreak-style': [0, 'windows'], // 换行风格
     'no-multi-spaces': 1, // 不能用多余的空格
     'no-trailing-spaces': 1, // 一行结束后面不要有空格
     'no-unreachable': 2, // 不能有无法执行的代码
     'no-var': 2, // 禁用var，用let和const代替
-    indent: [2, 2], // 缩进风格
     'init-declarations': 0, // 声明时必须赋初值
     // 避免 `eslint` 对于 `typescript` 函数重载的误报
     'no-redeclare': 0, // 禁止重复声明变量

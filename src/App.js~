@@ -1,8 +1,9 @@
 import React from 'react'
-function App() { 
+function App() {
+  const a = '123'
   return (
     <>
-      <div>hello world</div>
+      <div>{a}</div>
       <div>hello world</div>
     </>
   )
