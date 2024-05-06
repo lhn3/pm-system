@@ -1,0 +1,69 @@
+blockquote,
+body,
+button,
+dd,
+dl,
+dt,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+input,
+legend,
+li,
+ol,
+p,
+pre,
+td,
+textarea,
+th,
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: #484848;
+  text-decoration: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+//全局滚动条样式
+::-webkit-scrollbar {
+  background-color: #f4f4f4 !important;
+  height: 6px !important;
+  width: 6px !important;
+}
+::-webkit-scrollbar-corner {
+  width: 6px !important;
+  height: 6px !important;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-track {
+  border-right-color: transparent;
+  border-left-color: transparent;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+//最多两行行显示
+.text-ellipsis {
+  overflow: hidden;
+  /* 显示省略号 */
+  text-overflow: ellipsis;
+  /* 最多2行 */
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}

@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { memo, useEffect } from 'react'
+import { useLocation, useRoutes } from 'react-router-dom'
+import { routes } from './router'
 import { DatePicker } from 'antd'
-function App() {
+const App = memo(() => {
+  const location = useLocation()
+
+  useEffect(() => {
+    console.log(1111)
+  }, [location.pathname])
+
   return (
-    <>
-      <div>hello world</div>
-      <div>hello world</div>
+    <div className="app">
+      <div className="pages">{useRoutes(routes)}</div>
       <DatePicker />
-    </>
+    </div>
   )
-}
+})
 
 export default App

@@ -1,4 +1,6 @@
 dist/*
 node_modules/*
 *.json
+*.less
 public
+README.md
