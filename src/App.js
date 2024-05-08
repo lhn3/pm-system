@@ -10,7 +10,7 @@ const App = memo(() => {
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
   const { token } = useSelector(
-    (state) => ({
+    state => ({
       token: state.home.token
     }),
     shallowEqual
@@ -23,7 +23,6 @@ const App = memo(() => {
       dispatch(homeSlice.actions.setToken(token)) //设置token
       dispatch(userInfoAction(token)) //通过token获取用户信息
     }
-    console.log(666)
   }, [])
 
   /**每次路由变化校验是否登录*/

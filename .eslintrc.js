@@ -4,11 +4,7 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended'
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended'],
   settings: {
     react: {
       version: 'detect' // 或者指定具体版本
@@ -50,6 +46,23 @@ module.exports = {
     'init-declarations': 0, // 声明时必须赋初值
     // 避免 `eslint` 对于 `typescript` 函数重载的误报
     'no-redeclare': 0, // 禁止重复声明变量
+
+    //log警告
+    'no-console': [0, { allow: ['warn', 'error'] }],
+    //禁止[]内使用空格
+    'array-bracket-spacing': 2,
+    'no-unused-vars': 'off',
+    //禁用veval
+    'no-eval': 2,
+    //箭头函数前后空格
+    'arrow-spacing': 2,
+    //执行一致的间距
+    'block-spacing': 2,
+    //对象的键值保持一致的间距
+    'key-spacing': 2,
+    //为块执行一致的括号样式
+    'brace-style': 2,
+
     '@typescript-eslint/no-redeclare': 'error',
     '@typescript-eslint/no-unused-vars': 'off', // 不能有声明后未被使用的变量或参数
     'react/display-name': 'off',
