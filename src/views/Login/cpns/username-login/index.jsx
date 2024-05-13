@@ -6,7 +6,7 @@ const UsernameLogin = memo(() => {
   return (
     <>
       <Form.Item
-        name="username"
+        name="accountName"
         hasFeedback
         rules={[
           { required: true, message: '请输入用户名!' },

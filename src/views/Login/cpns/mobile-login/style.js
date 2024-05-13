@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const PhoneLoginWrapper = styled.div`
+const MobileLoginWrapper = styled.div`
   .code-line {
     display: flex;
     justify-content: space-between;
@@ -22,4 +22,4 @@ const PhoneLoginWrapper = styled.div`
   }
 `
 
-export default PhoneLoginWrapper
+export default MobileLoginWrapper

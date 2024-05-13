@@ -6,8 +6,9 @@ import { Provider } from 'react-redux'
 import store from '@/store'
 import { ThemeProvider } from 'styled-components'
 
+import 'nprogress/nprogress.css'
 import 'normalize.css'
-import '@/assets/css/reset.less'
+import '@/assets/css/common.scss'
 import 'antd/dist/antd.less'
 import { baseTheme } from '@/assets/theme'
 

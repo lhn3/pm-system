@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react'
 import { useLocation, useRoutes, useNavigate } from 'react-router-dom'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
-import homeSlice, { userInfoAction } from '@/store/home-slice'
+import userSlice, { userInfoAction } from '@/store/user-slice'
 import { routes } from './router'
 import localCache from '@/utils/cache.ts'
 
@@ -11,7 +11,7 @@ const App = memo(() => {
   const navigateTo = useNavigate()
   const { token } = useSelector(
     state => ({
-      token: state.home.token
+      token: state.user.token
     }),
     shallowEqual
   )
@@ -20,7 +20,7 @@ const App = memo(() => {
   useEffect(() => {
     let token = localCache.getCache('pm-token') || '' // 本地获取token
     if (token) {
-      dispatch(homeSlice.actions.setToken(token)) //设置token
+      dispatch(userSlice.actions.setToken(token)) //设置token
       dispatch(userInfoAction(token)) //通过token获取用户信息
     }
   }, [])

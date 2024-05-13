@@ -24,9 +24,26 @@ module.exports = {
       }
     }
   ],
+  style: {
+    sass: {
+      loaderOptions: {}
+    }
+  },
   webpack: {
     alias: {
       '@': path.resolve(__dirname, 'src')
+    }
+  },
+  //配置代理解决跨域
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:7001',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/api'
+        }
+      }
     }
   }
 }

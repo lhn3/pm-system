@@ -1,12 +1,13 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import homeSlice, { userInfoAction } from '@/store/home-slice'
+import userSlice, { userInfoAction } from '@/store/user-slice'
 import LoginWrapper from './style'
 import UsernameLogin from './cpns/username-login'
 import ForgotPassword from './cpns/forgot-password'
-import PhoneLogin from './cpns/phone-login'
-import { Button, Form, message } from 'antd'
+import MobileLogin from './cpns/mobile-login'
+import { Button, Form, message, Spin } from 'antd'
+import { loginRequest, checkCode, resetPassword } from '@/service/Api.ts'
 
 const Login = memo(() => {
   const staticInfo = {
@@ -16,6 +17,7 @@ const Login = memo(() => {
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
   const [cardType, setCardType] = useState(0) //0:用户名登录 1: 手机验证码登录 2: 忘记密码(发送手机验证) 3: 修改密码
+  const [loading, setLoading] = useState(false)
   const [form] = Form.useForm()
 
   /**表单校验规则*/
@@ -30,7 +32,7 @@ const Login = memo(() => {
     if (cardType === 0) {
       return <UsernameLogin />
     } else if (cardType === 1 || cardType === 2) {
-      return <PhoneLogin formProxy={form} />
+      return <MobileLogin cardType={cardType} formProxy={form} setLoading={value => setLoading(value)} />
     } else if (cardType === 3) {
       return <ForgotPassword />
     }
@@ -45,14 +47,22 @@ const Login = memo(() => {
       // 忘记密码操作
       form
         .validateFields()
-        .then(res => {
+        .then(async res => {
           if (cardType === 2) {
             //发送请求进入修改密码
+            setLoading(true)
+            let res = await checkCode({ smCode: form.getFieldValue('code') })
+            setLoading(false)
+            if (res.code !== 0 || !res.data) return message.error(res.msg)
+            message.success(res.msg)
             setCardType(3)
           } else if (cardType === 3) {
             if (form.getFieldValue('oldPassword') === form.getFieldValue('newPassword')) {
               //两次密码一致发送请求修改密码
-              message.success('密码修改成功，请登录！')
+              setLoading(true)
+              let res = await resetPassword({ newPassword: form.getFieldValue('newPassword') })
+              if (res.code !== 0 || !res.data) return message.error(res.msg)
+              setLoading(false)
               setCardType(0)
             } else {
               // 两次密码不一致提示错误
@@ -66,50 +76,55 @@ const Login = memo(() => {
 
   /**登录*/
   const toLogin = async value => {
-    console.log(value, '---------------')
-    if (cardType === 0) {
-      console.log('账号密码登录')
-    } else if (cardType === 1) {
-      console.log('手机号码登录')
+    // 手机号码登录需要先判断验证码是否正确
+    if (cardType === 1) {
+      setLoading(true)
+      let codeRes = await checkCode({ smCode: form.getFieldValue('code') })
+      setLoading(false)
+      if (codeRes.code !== 0 || !codeRes.data) return message.error(codeRes.msg)
     }
-
-    // 请求获取token
-    // let res = await geToken()
-    let token = '123456'
-    dispatch(homeSlice.actions.setToken(token)) //设置token
-    dispatch(userInfoAction(token)) //根据token获取用户信息
+    setLoading(true)
+    let res = await loginRequest({ type: cardType, ...value })
+    setLoading(false)
+    if (res.code !== 0 || !res.data) return message.error(res.msg)
+    message.success(res.msg)
+    let { userName: username, avatar, department: token } = res.data
+    dispatch(userSlice.actions.setToken(token)) //设置token
+    dispatch(userInfoAction({ username, avatar, token })) //根据token获取用户信息
     navigateTo('/home') //路由跳转
   }
 
   return (
     <LoginWrapper>
-      <div className="mian">
-        <div className="card-title">{staticInfo.cardTitle[cardType]}</div>
+      <Spin spinning={loading}>
+        <div className="mian">
+          <div className="card-title">{staticInfo.cardTitle[cardType]}</div>
 
-        <Form form={form} name="basic" initialValues={{ remember: true }} onFinish={values => toLogin(values)} autoComplete="off">
-          {showComponent()}
-        </Form>
-        <Button style={{ marginBottom: '20px' }} type="primary" block onClick={() => btnClick()}>
-          {staticInfo.btnTitle[cardType]}
-        </Button>
+          <Form form={form} name="basic" initialValues={{ remember: true }} onFinish={values => toLogin(values)} autoComplete="off">
+            {showComponent()}
+          </Form>
+          <Button style={{ marginBottom: '20px' }} type="primary" block onClick={() => btnClick()}>
+            {staticInfo.btnTitle[cardType]}
+          </Button>
 
-        <div className="login-type">
-          <div>
-            {[2, 3].includes(cardType) ? (
-              <span onClick={() => setCardType(0)}>← 返回</span>
-            ) : (
-              <span onClick={() => setCardType(2)}>← 忘记密码？</span>
-            )}
-          </div>
-          <div>
-            {cardType === 1 ? (
-              <span onClick={() => setCardType(0)}>返回 →</span>
-            ) : (
-              <span onClick={() => setCardType(1)}>使用手机号码登录 →</span>
-            )}
+          <div className="login-type">
+            <div>
+              {[2, 3].includes(cardType) ? (
+                <span onClick={() => setCardType(0)}>← 返回</span>
+              ) : (
+                <span onClick={() => setCardType(2)}>← 忘记密码？</span>
+              )}
+            </div>
+            <div>
+              {cardType === 1 ? (
+                <span onClick={() => setCardType(0)}>返回 →</span>
+              ) : (
+                <span onClick={() => setCardType(1)}>使用手机号码登录 →</span>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </Spin>
     </LoginWrapper>
   )
 })

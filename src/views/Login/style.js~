@@ -7,7 +7,7 @@ const LoginWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url(${loginBg}) center/cover no-repeat;
+  //background: url(${loginBg}) center/cover no-repeat;
   overflow: hidden;
   .mian {
     width: 360px;
@@ -20,12 +20,12 @@ const LoginWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    .card-title{
+    .card-title {
       text-align: center;
       font-size: 22px;
       font-weight: bold;
       margin-bottom: 10px;
-      color: rgba(0,0,0,0.6);
+      color: rgba(0, 0, 0, 0.6);
     }
     .login-type {
       display: flex;
@@ -36,35 +36,6 @@ const LoginWrapper = styled.div`
         cursor: pointer;
       }
     }
-
-    .mySwitch-enter{
-      opacity: 0;
-      transform: translateX(100px);
-    }
-    .mySwitch-enter-active{
-      opacity: 1;
-      transform: translateX(0);
-      transition: all 500ms;
-    }
-    .mySwitch-enter-done{
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .mySwitch-exit{
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .mySwitch-exit-active{
-      opacity: 0;
-      transform: translateX(-100px);
-      transition: all 500ms;
-    }
-    .mySwitch-exit-done{
-      opacity: 0;
-      transform: translateX(-100px);
-    }
-
   }
 `
 
